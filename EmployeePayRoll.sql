@@ -27,9 +27,15 @@ INSERT INTO Employee_Payroll VALUES ('Sachin',18000.50, CAST('2020-07-17' as Dat
 INSERT INTO Employee_Payroll VALUES ('Anand',28000.50, CAST('2021-01-13' as Date)); 
 INSERT INTO Employee_Payroll VALUES ('Rahul',24000.50, CAST('2021-03-24' as Date));
 
----------Retreive Records Using Select(UC4)
+---------Retreive All Records Using Select(UC4)
 SELECT * FROM Employee_Payroll;
-SELECT Id,Name FROM Employee_Payroll;
 SELECT * FROM Employee_Payroll WHERE Name='Raj';
 SELECT * FROM Employee_Payroll WHERE Salary>22000;
 SELECT * FROM Employee_Payroll WHERE StartDate>'2020-07-17'
+
+---------Retreive Particular Records Using Select(UC5)
+SELECT Salary FROM Employee_Payroll WHERE NAME='Raj' 
+SELECT Salary,Name FROM Employee_Payroll WHERE Name LIKE 'R%';
+SELECT Salary,Name FROM Employee_Payroll WHERE StartDate between CAST('2021-03-24' as Date) and getdate(); 
+SELECT Salary,Name FROM Employee_Payroll WHERE Salary between 22000 and 30000; 
+
