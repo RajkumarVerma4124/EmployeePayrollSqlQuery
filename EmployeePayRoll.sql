@@ -25,4 +25,11 @@ INSERT INTO Employee_Payroll VALUES ('Omkar',20000.50, CAST('2020-12-15' as Date
 INSERT INTO Employee_Payroll VALUES ('Yash',22500.50, getdate()); 
 INSERT INTO Employee_Payroll VALUES ('Sachin',18000.50, CAST('2020-07-17' as Date)); 
 INSERT INTO Employee_Payroll VALUES ('Anand',28000.50, CAST('2021-01-13' as Date)); 
-INSERT INTO Employee_Payroll VALUES ('Rahul',24000.50, CAST('2021-03-24' as Date)); 
+INSERT INTO Employee_Payroll VALUES ('Rahul',24000.50, CAST('2021-03-24' as Date));
+
+---------Retreive Records Using Select(UC4)
+SELECT * FROM Employee_Payroll;
+SELECT Id,Name FROM Employee_Payroll;
+SELECT * FROM Employee_Payroll WHERE Name='Raj';
+SELECT * FROM Employee_Payroll WHERE Salary>22000;
+SELECT * FROM Employee_Payroll WHERE StartDate>'2020-07-17'
