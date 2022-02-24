@@ -39,3 +39,10 @@ SELECT Salary,Name FROM Employee_Payroll WHERE Name LIKE 'R%';
 SELECT Salary,Name FROM Employee_Payroll WHERE StartDate between CAST('2021-03-24' as Date) and getdate(); 
 SELECT Salary,Name FROM Employee_Payroll WHERE Salary between 22000 and 30000; 
 
+---------Alter And Update Data(UC6)
+Alter Table Employee_Payroll Add Gender	char(1);
+update Employee_Payroll set Gender='M' where Id IN (1,6,7,8,9,10,11,12);
+update Employee_Payroll set Gender='F' where Id IN (2,3,4,5);
+update Employee_Payroll set Salary=27000 where Id IN (8);
+update Employee_Payroll set Salary=42000 where Name = 'Raj';
+update Employee_Payroll set Salary=33000 where Name = 'Aman';
