@@ -46,3 +46,15 @@ update Employee_Payroll set Gender='F' where Id IN (2,3,4,5);
 update Employee_Payroll set Salary=27000 where Id IN (8);
 update Employee_Payroll set Salary=42000 where Name = 'Raj';
 update Employee_Payroll set Salary=33000 where Name = 'Aman';
+
+---------Aggregate Functions(UC7)
+select SUM(Salary) as TotalSalary from Employee_Payroll;
+select SUM(Salary) as TotalSalary,Gender from Employee_Payroll group by Gender;
+select Max(Salary) as MaxEmployeeSalary from Employee_Payroll;
+select Max(Salary) as MaxSalary,Gender from Employee_Payroll group by Gender;
+select Min(Salary) as MinEmployeeSalary from Employee_Payroll;
+select Min(Salary) as MinSalary,Gender from Employee_Payroll group by Gender;
+select CAST(AVG(Salary) as decimal(10,2)) as AvgEmployeeSalary from Employee_Payroll;
+select CAST(AVG(Salary) as decimal(10,2)) as AvgSalary,Gender from Employee_Payroll group by Gender;
+select Count(Name) as NumOfEmployee from Employee_Payroll;
+select Count(Name) as NumOfEmployee,Gender from Employee_Payroll group by Gender;
