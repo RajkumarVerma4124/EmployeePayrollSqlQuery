@@ -60,7 +60,6 @@ SELECT Count(Name) as NumOfEmployee from Employee_Payroll;
 SELECT Count(Name) as NumOfEmployee,Gender from Employee_Payroll group by Gender;
 
 ---------Adding Phone Number, Department And Address Columns(UC8)
-SELECT * FROM Employee_Payroll;
 ALTER TABLE Employee_Payroll ADD Department varchar(20) not null default 'IT Developer';
 ALTER TABLE Employee_Payroll ADD PhoneNumber bigint;
 UPDATE Employee_Payroll SET PhoneNumber=8945125478 where name='Raj';
@@ -91,5 +90,11 @@ UPDATE Employee_Payroll SET Address='Banglore' WHERE Id IN (9,10,11,12);
 ALTER TABLE Employee_Payroll DROP COLUMN Address;
 ALTER TABLE Employee_Payroll DROP CONSTRAINT [DF__Employee___Addre__267ABA7A];
 
+---------Extended The Table With BasicPay,Deductions,TaxablePay,IncomeTax,NetPay Columns(UC9) 
+---------Rename The Existing Column
+EXEC SP_RENAME 'Employee_Payroll.Salary','BasicPay','COLUMN';
+---------Adding Mutiple Columns
+SELECT * FROM Employee_Payroll;
+ALTER TABLE Employee_Payroll ADD Deductions float,TaxablePay float,IncomeTax float,NetPay float;
 
 
