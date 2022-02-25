@@ -96,5 +96,22 @@ EXEC SP_RENAME 'Employee_Payroll.Salary','BasicPay','COLUMN';
 ---------Adding Mutiple Columns
 SELECT * FROM Employee_Payroll;
 ALTER TABLE Employee_Payroll ADD Deductions float,TaxablePay float,IncomeTax float,NetPay float;
+---------Updating Deductions Coulumn
+UPDATE Employee_Payroll SET Deductions=500 WHERE Id IN (1,2);
+UPDATE Employee_Payroll SET Deductions=1000 WHERE Id IN (3,4);
+UPDATE Employee_Payroll SET Deductions=800 WHERE Id IN (5,6,7,8);
+UPDATE Employee_Payroll SET Deductions=750 WHERE Id IN (9,10,11,12);
+---------Updating NetPay Coulumn
+UPDATE Employee_Payroll SET NetPay=38000 WHERE Id IN (1,5);
+UPDATE Employee_Payroll SET NetPay=21000 WHERE Id IN (8,9,12);
+UPDATE Employee_Payroll SET NetPay=30000 WHERE Id IN (2,3,6);
+UPDATE Employee_Payroll SET NetPay=25000 WHERE Id IN (5,7,11);
+UPDATE Employee_Payroll SET NetPay=17000 WHERE Id IN (4,10);
+---------Updating IncomeTax Coulumn
+UPDATE Employee_Payroll SET IncomeTax=2499.99;
+---------Updating TaxablePay Coulumn
+UPDATE Employee_Payroll SET TaxablePay=4999.99;
 
-
+---------Creating Unnecessary Redundancy(UC10)
+INSERT INTO Employee_Payroll VALUES('Raj',45000,'2021-02-24','M','Testing',8945125478,'Mumbai',800,4999.99,2499.99,42000);
+SELECT * FROM Employee_Payroll WHERE Name = 'Raj';
