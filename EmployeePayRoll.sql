@@ -191,8 +191,8 @@ SELECT * FROM EmployeeDepartment;
 
 ---------------------------------Ensuring To Retrieve Records Using Queries From New Table Structure(UC12)----------------------------------------------
 ---------Retrieving All Records(UC4)
-SELECT comp.CompanyID,comp.CompanyName,emp.EmployeeId,emp.EmployeeName,emp.PhoneNumber,emp.StartDate,emp.Gender,
-pay.BasicPay,pay.TaxablePay,pay.IncomeTax,pay.NetPay,pay.Deductions,dep.DepartmentId,dep.DepartmentId
+SELECT comp.CompanyID,comp.CompanyName,emp.EmployeeId,emp.EmployeeName,emp.PhoneNumber,emp.StartDate,emp.Gender,emp.EmployeeAddress,
+pay.BasicPay,pay.TaxablePay,pay.IncomeTax,pay.NetPay,pay.Deductions,dep.DepartmentId,dep.DepartmentName
 FROM Company AS comp
 INNER JOIN Employee AS emp ON comp.CompanyId=emp.CompanyId
 INNER JOIN Payroll AS pay ON pay.EmployeeId = emp.EmployeeId	
