@@ -1,10 +1,10 @@
 -----------------------------Welcome To The Employee PayRoll Service DataBase---------------------------------
 
----------Create DB (UC1)
+------------------------------------------Create DB (UC1)-----------------------------------------------------
 create database PayRoll_Service;
 use PayRoll_Service;
 
----------Create Table (UC2)
+-----------------------------------------Create Table (UC2)---------------------------------------------------
 CREATE TABLE Employee_Payroll (
     Id int identity(1,1) primary key,
     Name varchar(255) not null,
@@ -12,7 +12,7 @@ CREATE TABLE Employee_Payroll (
     StartDate date,
 ); 
 
----------Insert Data Into DB Table(UC3)
+---------------------------------------Insert Data Into DB Table(UC3)-------------------------------------------
 INSERT INTO Employee_Payroll(Name,Salary,StartDate) VALUES ('Raj',40000.50, getdate()); 
 INSERT INTO Employee_Payroll(Name,Salary,StartDate) VALUES ('Sona',32000.50, CAST('2020-04-17' as Date)); 
 INSERT INTO Employee_Payroll(Name,Salary,StartDate) VALUES ('Nidhi',35000.50, CAST('2021-02-24' as Date)); 
@@ -27,19 +27,19 @@ INSERT INTO Employee_Payroll VALUES ('Sachin',18000.50, CAST('2020-07-17' as Dat
 INSERT INTO Employee_Payroll VALUES ('Anand',28000.50, CAST('2021-01-13' as Date)); 
 INSERT INTO Employee_Payroll VALUES ('Rahul',24000.50, CAST('2021-03-24' as Date));
 
----------Retreive All Records Using Select(UC4)
+----------------------------------Retreive All Records Using Select(UC4)-------------------------------------------
 SELECT * FROM Employee_Payroll;
 SELECT * FROM Employee_Payroll WHERE Name='Raj';
 SELECT * FROM Employee_Payroll WHERE Salary>22000;
 SELECT * FROM Employee_Payroll WHERE StartDate>'2020-07-17'
 
----------Retreive Particular Records Using Select(UC5)
+-------------------------------Retreive Particular Records Using Select(UC5)----------------------------------
 SELECT Salary FROM Employee_Payroll WHERE NAME='Raj' 
 SELECT Salary,Name FROM Employee_Payroll WHERE Name LIKE 'R%';
 SELECT Salary,Name FROM Employee_Payroll WHERE StartDate between CAST('2021-03-24' as Date) and getdate(); 
 SELECT Salary,Name FROM Employee_Payroll WHERE Salary between 22000 and 30000; 
 
----------Alter And Update Data(UC6)
+-----------------------------------------Alter And Update Data(UC6)--------------------------------------------
 ALTER TABLE Employee_Payroll ADD Gender	char(1);
 UPDATE Employee_Payroll SET Gender='M' WHERE Id IN (1,6,7,8,9,10,11,12);
 UPDATE Employee_Payroll SET Gender='F' WHERE Id IN (2,3,4,5);
@@ -47,7 +47,7 @@ UPDATE Employee_Payroll SET Salary=27000 WHERE Id IN (8);
 UPDATE Employee_Payroll SET Salary=42000 WHERE Name = 'Raj';
 UPDATE Employee_Payroll SET Salary=33000 WHERE Name = 'Aman';
 
----------Aggregate Functions(UC7)
+-----------------------------------------Aggregate Functions(UC7)-----------------------------------------------
 SELECT SUM(Salary) as TotalSalary from Employee_Payroll;
 SELECT SUM(Salary) as TotalSalary,Gender from Employee_Payroll group by Gender;
 SELECT MAX(Salary) as MaxEmployeeSalary from Employee_Payroll;
@@ -59,7 +59,7 @@ SELECT CAST(AVG(Salary) as decimal(10,2)) as AvgSalary,Gender from Employee_Payr
 SELECT Count(Name) as NumOfEmployee from Employee_Payroll;
 SELECT Count(Name) as NumOfEmployee,Gender from Employee_Payroll group by Gender;
 
----------Adding Phone Number, Department And Address Columns(UC8)
+-------------------------------Adding Phone Number, Department And Address Columns(UC8)--------------------------------
 ALTER TABLE Employee_Payroll ADD Department varchar(20) not null default 'IT Developer';
 ALTER TABLE Employee_Payroll ADD PhoneNumber bigint;
 UPDATE Employee_Payroll SET PhoneNumber=8945125478 where name='Raj';
@@ -80,17 +80,17 @@ UPDATE Employee_Payroll SET Department='IT Developer' where Id IN (5,6,7,8);
 UPDATE Employee_Payroll SET Department='Testing' where Id IN (9,10);
 UPDATE Employee_Payroll SET Department='QA' where Id IN (11,12);
 
----------Adding column Address With Default Value
+-------------------------------------Adding column Address With Default Value---------------------------------------------
 ALTER TABLE Employee_Payroll ADD Address varchar(255) default 'NIL';
 UPDATE Employee_Payroll SET Address='Mumbai' WHERE Id IN (1,3,5,7);
 UPDATE Employee_Payroll SET Address='Delhi' WHERE Id IN (2,4,6,8);
 UPDATE Employee_Payroll SET Address='Banglore' WHERE Id IN (9,10,11,12);
 
----------To Remove Column Containing Constraint 
+----------------------------------------To Remove Column Containing Constraint------------------------------------------------ 
 ALTER TABLE Employee_Payroll DROP COLUMN Address;
 ALTER TABLE Employee_Payroll DROP CONSTRAINT [DF__Employee___Addre__267ABA7A];
 
----------Extended The Table With BasicPay,Deductions,TaxablePay,IncomeTax,NetPay Columns(UC9) 
+-----------------Extended The Table With BasicPay,Deductions,TaxablePay,IncomeTax,NetPay Columns(UC9)-------------------------- 
 ---------Rename The Existing Column
 EXEC SP_RENAME 'Employee_Payroll.Salary','BasicPay','COLUMN';
 ---------Adding Mutiple Columns
@@ -112,11 +112,11 @@ UPDATE Employee_Payroll SET IncomeTax=2499.99;
 ---------Updating TaxablePay Coulumn
 UPDATE Employee_Payroll SET TaxablePay=4999.99;
 
----------Creating Unnecessary Redundancy(UC10)
+---------------------------------------------Creating Unnecessary Redundancy(UC10)---------------------------------------------------
 INSERT INTO Employee_Payroll VALUES('Raj',45000,'2021-02-24','M','Testing',8945125478,'Mumbai',800,4999.99,2499.99,42000);
 SELECT * FROM Employee_Payroll WHERE Name = 'Raj';
 
----------Recreate Using Er Diagram(UC11)
+--------------------------------------------------Recreate Using Er Diagram(UC11)-----------------------------------------------------
 ---------Creating Company Table
 CREATE TABLE Company(
 	CompanyId INT IDENTITY(1,1) PRIMARY KEY,
@@ -189,7 +189,7 @@ SELECT * FROM Payroll
 INSERT INTO EmployeeDepartment VALUES(1,1),(8,2),(9,3),(10,4),(11,5),(12,1),(13,2),(14,3);
 SELECT * FROM EmployeeDepartment;
 
----------Ensuring To Retrieve Records Using Queries From New Table Structure(UC12)
+---------------------------------Ensuring To Retrieve Records Using Queries From New Table Structure(UC12)----------------------------------------------
 ---------Retrieving All Records(UC4)
 SELECT comp.CompanyID,comp.CompanyName,emp.EmployeeId,emp.EmployeeName,emp.PhoneNumber,emp.StartDate,emp.Gender,
 pay.BasicPay,pay.TaxablePay,pay.IncomeTax,pay.NetPay,pay.Deductions,dep.DepartmentId,dep.DepartmentId
@@ -226,5 +226,5 @@ INNER JOIN Payroll as pay ON emp.EmployeeId = pay.EmployeeId GROUP BY Gender ORD
 SELECT MAX(pay.BasicPay) as MaxEmpSalary,emp.Gender 
 FROM Employee AS emp 
 INNER JOIN Payroll as pay ON emp.EmployeeId = pay.EmployeeId GROUP BY Gender ORDER BY Gender DESC;
----------Aggregate Function Max
+---------Aggregate Function Count
 SELECT COUNT(EmployeeName) as NumOfEmployee,Gender FROM Employee GROUP BY Gender ORDER BY Gender DESC;
