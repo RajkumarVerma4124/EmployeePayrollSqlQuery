@@ -115,3 +115,76 @@ UPDATE Employee_Payroll SET TaxablePay=4999.99;
 ---------Creating Unnecessary Redundancy(UC10)
 INSERT INTO Employee_Payroll VALUES('Raj',45000,'2021-02-24','M','Testing',8945125478,'Mumbai',800,4999.99,2499.99,42000);
 SELECT * FROM Employee_Payroll WHERE Name = 'Raj';
+
+---------Recreate Using Er Diagram(UC11)
+---------Creating Company Table
+CREATE TABLE Company(
+	CompanyId INT IDENTITY(1,1) PRIMARY KEY,
+	CompanyName VARCHAR(100)
+	);
+
+---------Creating Deptartment table
+CREATE TABLE Department(
+	DepartmentId INT IDENTITY(1,1) PRIMARY KEY,
+	DepartmentName VARCHAR(50)
+);
+
+---------Creating Employee Table
+CREATE TABLE Employee(
+	EmployeeId INT IDENTITY(1,1) PRIMARY KEY,
+	CompanyId INT FOREIGN KEY REFERENCES Company(CompanyId),
+	EmployeeName VARCHAR(30),
+	PhoneNumber BIGINT,
+	EmployeeAddress VARCHAR(50),
+	StartDate DATE,
+	Gender CHAR(1)
+);
+
+---------Creating Payroll Table
+CREATE TABLE Payroll(
+	EmployeeId INT FOREIGN KEY REFERENCES Employee(EmployeeId),
+	BasicPay FLOAT,
+	TaxablePay FLOAT,
+	IncomeTax FLOAT,
+	NetPay FLOAT,
+	Deductions FLOAT
+);
+
+---------Creating Employee Department Table
+create table EmployeeDepartment(
+	EmployeeId int FOREIGN KEY REFERENCES Employee(EmployeeId),
+	DepartmentId int FOREIGN KEY REFERENCES Department(DepartmentId),
+);
+
+---------Inserting Value Into Company Table
+INSERT INTO Company VALUES('TCS'),('INFOSYS'),('WIPRO');
+SELECT * FROM Company;
+
+---------Inserting Value Into Department Table
+INSERT INTO Department VALUES('HR'),('IT Developer'),('QA'),('Testing'),('Finance');
+SELECT * FROM Department;
+
+---------Inserting Value Into Employee Table
+INSERT INTO Employee VALUES(1,'Rajkumar',9820456123,'NaviMumbai','2020-02-23','M');
+INSERT INTO Employee VALUES(2,'Omkar',9874185296,'Mumbai','2021-03-15','M'),
+						(3,'Ajay',9745612587,'Pune','2020-01-13','M'),
+						(1,'Deepak',9587463214,'Gujarat','2019-05-17','M'),
+						(2,'Dibin',9845687321,'Chennai','2020-07-25','M'),
+						(3,'Rahul',9685475645,'Karnataka','2021-11-27','M'),
+						(1,'Nidhi',9874561230,'Delhi','2022-01-17','F'),
+						(2,'Mansi',9865741230,'Haryana','2021-02-19','F');
+SELECT * FROM Employee;
+
+---------Inserting Value Into Payroll Table
+INSERT INTO Payroll(EmployeeId,BasicPay,IncomeTax,Deductions) Values (1,40000,1999.99,899.99),(8,50000,1999.99,899.99),(9,30000,1999.99,899.99),(10,25000,1999.99,899.99);
+INSERT INTO Payroll(EmployeeId,BasicPay,IncomeTax,Deductions) Values (10,35000,1999.99,899.99),(11,45000,1999.99,899.99),(12,55000,1999.99,899.99),(13,65000,1999.99,899.99);
+UPDATE Payroll SET EmployeeId = 14 where BasicPay = 35000;
+---------Updating TaxablePay Based On BasicPay - Deductions
+UPDATE Payroll SET TaxablePay = BasicPay-Deductions;
+---------Updating Netpay Based On Taxablepay-incometax
+UPDATE Payroll SET NetPay = TaxablePay-IncomeTax;
+SELECT * FROM Payroll
+
+---------Inserting Value Into Employee Department Table
+INSERT INTO EmployeeDepartment VALUES(1,1),(8,2),(9,3),(10,4),(11,5),(12,1),(13,2),(14,3);
+SELECT * FROM EmployeeDepartment;
