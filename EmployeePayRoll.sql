@@ -107,10 +107,11 @@ UPDATE Employee_Payroll SET NetPay=21000 WHERE Id IN (8,9,12);
 UPDATE Employee_Payroll SET NetPay=30000 WHERE Id IN (2,3,6);
 UPDATE Employee_Payroll SET NetPay=25000 WHERE Id IN (5,7,11);
 UPDATE Employee_Payroll SET NetPay=17000 WHERE Id IN (4,10);
+UPDATE Employee_Payroll SET NetPay = TaxablePay-IncomeTax;
 ---------Updating IncomeTax Coulumn
 UPDATE Employee_Payroll SET IncomeTax=2499.99;
 ---------Updating TaxablePay Coulumn
-UPDATE Employee_Payroll SET TaxablePay=4999.99;
+UPDATE Employee_Payroll SET TaxablePay = BasicPay-Deductions;
 
 ---------------------------------------------Creating Unnecessary Redundancy(UC10)---------------------------------------------------
 INSERT INTO Employee_Payroll VALUES('Raj',45000,'2021-02-24','M','Testing',8945125478,'Mumbai',800,4999.99,2499.99,42000);
