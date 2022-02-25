@@ -188,3 +188,43 @@ SELECT * FROM Payroll
 ---------Inserting Value Into Employee Department Table
 INSERT INTO EmployeeDepartment VALUES(1,1),(8,2),(9,3),(10,4),(11,5),(12,1),(13,2),(14,3);
 SELECT * FROM EmployeeDepartment;
+
+---------Ensuring To Retrieve Records Using Queries From New Table Structure(UC12)
+---------Retrieving All Records(UC4)
+SELECT comp.CompanyID,comp.CompanyName,emp.EmployeeId,emp.EmployeeName,emp.PhoneNumber,emp.StartDate,emp.Gender,
+pay.BasicPay,pay.TaxablePay,pay.IncomeTax,pay.NetPay,pay.Deductions,dep.DepartmentId,dep.DepartmentId
+FROM Company AS comp
+INNER JOIN Employee AS emp ON comp.CompanyId=emp.CompanyId
+INNER JOIN Payroll AS pay ON pay.EmployeeId = emp.EmployeeId	
+INNER JOIN EmployeeDepartment as empDep ON empDep.EmployeeId = emp.EmployeeId
+INNER JOIN Department as dep ON dep.DepartmentId = empDep.DepartmentId;
+
+---------Retriving Using Employee Name(UC5)
+SELECT comp.CompanyID,comp.CompanyName,emp.EmployeeId,emp.EmployeeName,emp.PhoneNumber,emp.StartDate,emp.Gender
+FROM Company AS comp
+INNER JOIN Employee AS emp ON comp.CompanyId = emp.CompanyId AND emp.EmployeeName='Rajkumar';
+---------Retrieve The Data From Startdate And Now(current date)(UC5)
+SELECT comp.CompanyID,comp.CompanyName,emp.EmployeeId,emp.EmployeeName,emp.PhoneNumber,emp.StartDate,emp.Gender
+FROM Company AS comp 
+INNER JOIN Employee AS emp 
+ON comp.CompanyId = emp.CompanyId AND emp.StartDate BETWEEN ('2020-11-11') AND getdate();
+
+---------Performing Aggregate Functions Using Group By(UC7)
+---------Aggregate Function Sum
+SELECT SUM(pay.BasicPay) as TotalEmpSalary,emp.Gender
+FROM Employee AS emp 
+INNER JOIN Payroll as pay ON emp.EmployeeId = pay.EmployeeId GROUP BY Gender ORDER BY Gender DESC;
+---------Aggregate Function Avg
+SELECT CAST(AVG(pay.BasicPay) as decimal(10,2)) as AverageEmpSalary,emp.Gender
+FROM Employee AS emp 
+INNER JOIN Payroll as pay ON emp.EmployeeId = pay.EmployeeId GROUP BY Gender ORDER BY Gender DESC;
+---------Aggregate Function Min
+SELECT MIN(pay.BasicPay) as MinEmpSalary,emp.Gender 
+FROM Employee AS emp 
+INNER JOIN Payroll as pay ON emp.EmployeeId = pay.EmployeeId GROUP BY Gender ORDER BY Gender DESC;
+---------Aggregate Function Max
+SELECT MAX(pay.BasicPay) as MaxEmpSalary,emp.Gender 
+FROM Employee AS emp 
+INNER JOIN Payroll as pay ON emp.EmployeeId = pay.EmployeeId GROUP BY Gender ORDER BY Gender DESC;
+---------Aggregate Function Max
+SELECT COUNT(EmployeeName) as NumOfEmployee,Gender FROM Employee GROUP BY Gender ORDER BY Gender DESC;
